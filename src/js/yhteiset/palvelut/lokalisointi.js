@@ -12,7 +12,7 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // European Union Public Licence for more details.
 
-angular.module('yhteiset.palvelut.lokalisoi', [] )
+angular.module('yhteiset.palvelut.lokalisointi', [] )
   .filter('lokalisoiKentta', ['kieli', function(kieli){
     return function(obj, prop) {
       if (obj === null) {
