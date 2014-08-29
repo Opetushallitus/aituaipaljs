@@ -15,7 +15,7 @@
 'use strict';
 
 // Aitun services.js:stä.
-angular.module('yhteiset.palvelut.virheLogitus', [])
+angular.module('yhteiset.palvelut.virheLogitus', ['ngCookies'])
 
   .factory('virheLogitusApi', ['$log', '$window', '$injector', function($log, $window, $injector){
     return {
