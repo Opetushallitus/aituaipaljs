@@ -12,7 +12,7 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // European Union Public Licence for more details.
 
-angular.module('yhteiset.palvelut.ilmoitus', [] )
+angular.module('yhteiset.palvelut.ilmoitus', ['toaster'])
   .factory('ilmoitus', ['toaster', function(toaster){
     return {
       onnistuminen: function(viesti){
