@@ -1,0 +1,15 @@
+{
+  "name": "aituaipaljs",
+  "homepage": "https://github.com/Opetushallitus/aituaipaljs",
+  "authors": [
+    "Solita"
+  ],
+  "license": "EUPL-1.1",
+  "private": true,
+  "dependencies": {
+    "AngularJS-Toaster": "~0.4.7"
+  },
+  "ignore": [
+    "bower_components"
+  ]
+}
