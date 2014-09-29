@@ -13,14 +13,7 @@
 // European Union Public Licence for more details.
 
 angular.module('yhteiset.direktiivit.hakuvalitsin', [] )
-  .factory('modelPromise', ['$q', function ($q) {
-    return function (model) {
-      // Palauttaa promisen, joka sisältää annetun modelin. Jos model on Angular
-      // resource, palauttaa sen oman promisen.
-      return (model && model.$promise) || $q.when(model);
-    }
-  }])
-  .directive('hakuValitsin', ['i18n', 'kieli', 'modelPromise', function (i18n, kieli, modelPromise) {
+  .directive('hakuValitsin', ['i18n', 'kieli', function (i18n, kieli) {
     return {
       restrict: 'E',
       replace: true,
@@ -30,72 +23,32 @@ angular.module('yhteiset.direktiivit.hakuvalitsin', [] )
         model: '=',
         modelIdProperty: '@',
         modelTextProperty: '@',
-        searchPropertyMap: '@',
-        pakollinen: '='
+        pakollinen: '=',
+        monivalinta: '='
       },
 
       template: '<fieldset class="select2-fieldset">' +
         '<label ng-class="{pakollinen : pakollinen}">{{otsikko}}</label>' +
-        '<input ui-select2="options" ng-required="pakollinen" ng-model="selection" data-placeholder="Valitse"></input>' +
+        '<div ui-select2="options" ng-required="pakollinen" ng-model="selection" data-placeholder="Valitse"></div>' +
         '</fieldset>',
 
       controller: function ($scope) {
         var modelIdProp = $scope.modelIdProperty;
         var modelTextProp = $scope.modelTextProperty;
-        var searchPropertyMap = $scope.$eval($scope.searchPropertyMap);
 
-        // Select2 hävittää saamastaan model-oliosta kenttiä valinnan
-        // vaihtuessa. Tämän vuoksi ei voida antaa Angular-scopessa olevaa
-        // modelia suoraan Select2:lle, vaan annetaan sille eri olio, ja
-        // pidetään watcheilla niiden id- ja text-kentät synkassa.
-
-        $scope.$watch('selection', function (value) {
-          if (value && value[modelIdProp]) {
-            $scope.model = $scope.model || {};
-            _.assign($scope.model, value);
-          } else if (value === '') {
-            //Kun tyhjennetään select2 inputti.
-            delete $scope.model[modelIdProp];
-          }
-        });
-
-        // Jostain syystä watch ei huomaa, kun Angular resourcen promise
-        // valmistuu ja täyttää puuttuvat kentät modeliin. Kierretään ongelma
-        // odottamalla promisea eksplisiittisesti. Direktiivin model voi olla
-        // myös tavallinen olio, joten haetaan modelille promise
-        // modelPromise-funktiolla (ks. yllä).
-        $scope.$watch('model', function (value) {
-          modelPromise(value).then(function () {
-            if (value && value[modelIdProp]) {
-              $scope.selection = $scope.selection ? $scope.selection : {};
-              $scope.selection[modelIdProp] = value[modelIdProp];
-              $scope.selection[modelTextProp] = lokalisoituTeksti(value, modelTextProp);
-            }
-          })
-        });
-
-        function lokalisoituTeksti(obj, textProp) {
+        function lokalisoituTeksti(obj) {
           var teksti = '';
 
-          if (_.has(obj, textProp)) {
-            teksti = obj[textProp];
+          if (_.has(obj, modelTextProp)) {
+            teksti = obj[modelTextProp];
           } else {
-            teksti = obj[textProp + '_' + kieli];
+            teksti = obj[modelTextProp + '_' + kieli];
           }
           return teksti;
         }
 
-        function mapSearchResult(obj) {
-          if (searchPropertyMap) {
-            return _.transform(searchPropertyMap, function (result, toKey, fromKey) {
-              result[toKey] = obj[fromKey];
-            });
-          } else {
-            return obj;
-          }
-        }
-
         $scope.options = {
+          multiple: $scope.monivalinta,
           width: '100%',
           minimumInputLength: 1,
           allowClear: true,
@@ -109,15 +62,11 @@ angular.module('yhteiset.direktiivit.hakuvalitsin', [] )
               };
             },
             results: function (data) {
-              return {results: _.map(data, mapSearchResult)};
+              return {results: data};
             }
           },
-          formatResult: function (object) {
-            return lokalisoituTeksti(object, modelTextProp);
-          },
-          formatSelection: function (object) {
-            return lokalisoituTeksti(object, modelTextProp);
-          },
+          formatResult: lokalisoituTeksti,
+          formatSelection: lokalisoituTeksti,
           id: function (object) {
             return object[modelIdProp];
           },
