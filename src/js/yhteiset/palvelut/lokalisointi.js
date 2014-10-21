@@ -12,18 +12,19 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // European Union Public Licence for more details.
 
+'use strict';
+
 angular.module('yhteiset.palvelut.lokalisointi', [] )
   .filter('lokalisoiKentta', ['kieli', function(kieli){
     return function(obj, prop) {
-      if (obj === null) {
+      if (!obj) {
         return '';
       }
       var haluttu = obj[prop + '_' + kieli];
       if (haluttu) {
         return haluttu;
       }
-      var toinenKieli = (kieli == 'fi') ? 'sv' : 'fi';
+      var toinenKieli = (kieli === 'fi') ? 'sv' : 'fi';
       return obj[prop + '_' + toinenKieli];
     };
-  }])
-;
+  }]);
