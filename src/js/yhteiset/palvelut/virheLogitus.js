@@ -27,7 +27,7 @@ angular.module('yhteiset.palvelut.virheLogitus', ['ngCookies'])
           var virheviesti = poikkeus.toString();
           var stackTrace = printStackTrace({ e: poikkeus });
 
-          var ophBaseUrl = (window.ophBaseUrl !== undefined ? window.ophBaseUrl : "");
+          var ophBaseUrl = (window.ophBaseUrl !== undefined ? window.ophBaseUrl : '');
 
           $.ajax({
             type: 'POST',

@@ -28,3 +28,4 @@ angular.module('yhteiset.palvelut.lokalisointi', [] )
       return obj[prop + '_' + toinenKieli];
     };
   }]);
+

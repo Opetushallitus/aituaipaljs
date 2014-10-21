@@ -12,12 +12,14 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // European Union Public Licence for more details.
 
+'use strict';
+
 angular.module('yhteiset.palvelut.palvelinvirhe', [])
   .factory('httpInternalErrorInterceptor', ['$q', '$location', function($q, $location) {
     return {
       'responseError': function(rejection) {
         if (rejection.status === 500) {
-          $location.path("/palvelinvirhe");
+          $location.path('/palvelinvirhe');
         }
         return $q.reject(rejection);
       }

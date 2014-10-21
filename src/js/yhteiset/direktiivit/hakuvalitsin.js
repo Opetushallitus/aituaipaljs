@@ -12,6 +12,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // European Union Public Licence for more details.
 
+'use strict';
+
 angular.module('yhteiset.direktiivit.hakuvalitsin', [] )
   .directive('hakuValitsin', ['i18n', 'kieli', function (i18n, kieli) {
     return {
@@ -71,13 +73,13 @@ angular.module('yhteiset.direktiivit.hakuvalitsin', [] )
             return object[modelIdProp];
           },
           formatNoMatches: function () {
-            return i18n.yleiset['ei_tuloksia'];
+            return i18n.yleiset.ei_tuloksia;
           },
           formatInputTooShort: function () {
-            return i18n.yleiset['anna_hakuehto'];
+            return i18n.yleiset.anna_hakuehto;
           },
           formatSearching: function () {
-            return i18n.yleiset['etsitaan'];
+            return i18n.yleiset.etsitaan;
           },
           initSelection: function () {
           }
