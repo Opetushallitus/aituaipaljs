@@ -31,7 +31,7 @@ angular.module('yhteiset.direktiivit.hakuvalitsin', [] )
 
       template: '<fieldset class="select2-fieldset">' +
         '<label ng-class="{pakollinen : pakollinen}">{{otsikko}}</label>' +
-        '<div ui-select2="options" ng-required="pakollinen" ng-model="selection" data-placeholder="Valitse"></div>' +
+        '<div ui-select2="options" ng-required="pakollinen" ng-model="model" data-placeholder="Valitse"></div>' +
         '</fieldset>',
 
       controller: function ($scope) {
