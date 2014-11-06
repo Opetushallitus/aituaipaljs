@@ -12,6 +12,8 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // European Union Public Licence for more details.
 
+'use strict';
+
 angular.module('yhteiset.palvelut.tallennusMuistutus', [])
   .factory('tallennusMuistutus', ['$rootScope', 'i18n', function($rootScope, i18n) {
     var form = null;
@@ -21,21 +23,9 @@ angular.module('yhteiset.palvelut.tallennusMuistutus', [])
       return form && form.$dirty && kysyVarmistus;
     }
 
-    window.addEventListener("beforeunload", confirmBeforeUnload, false);
-
-    $rootScope.$on('$locationChangeStart', function (event) {
-      if (varmista()) {
-        if (confirm(i18n["haluatko-poistua"])) {
-          kysyVarmistus = false;
-        } else {
-          event.preventDefault();
-        }
-      }
-    });
-
     function confirmBeforeUnload(e) {
       if (varmista()) {
-        var confirmationMessage = i18n["haluatko-poistua"];
+        var confirmationMessage = i18n['haluatko-poistua'];
         (e || window.event).returnValue = confirmationMessage;     //Gecko + IE
         return confirmationMessage;                                //Webkit, Safari, Chrome etc.
 
@@ -44,6 +34,18 @@ angular.module('yhteiset.palvelut.tallennusMuistutus', [])
         // koska unloadin jälkeen kaikki skriptit ladataan uudestaan.
       }
     }
+
+    window.addEventListener('beforeunload', confirmBeforeUnload, false);
+
+    $rootScope.$on('$locationChangeStart', function (event) {
+      if (varmista()) {
+        if (window.confirm(i18n['haluatko-poistua'])) {
+          kysyVarmistus = false;
+        } else {
+          event.preventDefault();
+        }
+      }
+    });
 
     return {
       muistutaTallennuksestaPoistuttaessaFormilta: function(f) {
