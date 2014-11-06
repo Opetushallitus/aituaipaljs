@@ -31,7 +31,7 @@ angular.module('yhteiset.palvelut.i18n', ['ngResource'])
           return arvot[avain];
         }
       }, this);
-      if ($window.developmentMode && tulos === undefined) {
+      if ($window.developmentMode !== false && tulos === undefined) {
         $window.alert('Tuntematon käännösavain: ' + avain);
       }
       return tulos;
