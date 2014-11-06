@@ -53,20 +53,19 @@ describe('yhteiset.palvelut.i18n', function(){
     });
 
     it('näyttää kehitysmoodissa alertin, jos avainta ei löydy', function(){
-      $window.developmentMode = true;
       var i18n = {foo: 'bar', hae: i18nHae};
       i18n.hae('baz.blah');
       expect($window.alert.calls.mostRecent().args[0]).toMatch(/baz\.blah/);
     });
 
     it('ei näytä kehitysmoodissa alertia, jos avain löytyy', function(){
-      $window.developmentMode = true;
       var i18n = {foo: 'bar', hae: i18nHae};
       i18n.hae('foo');
       expect($window.alert).not.toHaveBeenCalled();
     });
 
     it('ei näytä alertia tuotantomoodissa', function(){
+      $window.developmentMode = false;
       var i18n = {foo: 'bar', hae: i18nHae};
       i18n.hae('baz');
       expect($window.alert).not.toHaveBeenCalled();
