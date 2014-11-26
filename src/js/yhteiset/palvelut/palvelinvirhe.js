@@ -15,25 +15,22 @@
 'use strict';
 
 angular.module('yhteiset.palvelut.palvelinvirhe', [])
-  .factory('httpInternalErrorInterceptor', ['$q', '$location', function($q, $location) {
+  .factory('httpInternalErrorInterceptor', ['$q', 'ilmoitus', function($q, ilmoitus) {
+    // cdep workaround
+    var injector = angular.injector(['yhteiset.palvelut.i18n']);
+    var i18n = injector.get('i18n');
+
     return {
       'responseError': function(rejection) {
         if (rejection.status === 500) {
-          $location.path('/palvelinvirhe');
+          ilmoitus.virhe(i18n.hae('yleiset.palvelin_virhe'));
         }
         return $q.reject(rejection);
       }
     };
   }])
 
-  .config(['$httpProvider', '$routeProvider', function($httpProvider, $routeProvider) {
+  .config(['$httpProvider', '$routeProvider', function($httpProvider) {
     $httpProvider.interceptors.push('httpInternalErrorInterceptor');
-
-    $routeProvider.when('/palvelinvirhe', {
-      template: '<h1>{{ i18n.palvelinvirhe.otsikko }}</h1><div>{{ i18n.palvelinvirhe.teksti }}</div>',
-      controller: ['$scope', 'i18n', function($scope, i18n) {
-        $scope.i18n = i18n;
-      }]
-    });
   }])
 ;
