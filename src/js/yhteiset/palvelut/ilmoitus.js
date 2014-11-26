@@ -16,12 +16,20 @@
 
 angular.module('yhteiset.palvelut.ilmoitus', ['toaster'])
   .factory('ilmoitus', ['toaster', function(toaster){
+    var aikarajat = {
+      onnistuminen: 5000,
+      virhe: 0
+    };
+
     return {
       onnistuminen: function(viesti){
-        toaster.pop('success', null, viesti);
+        toaster.pop('success', null, viesti, aikarajat.onnistuminen);
       },
       virhe: function(viesti){
-        toaster.pop('error', null, viesti, 0);
+        toaster.pop('error', null, viesti, aikarajat.virhe);
+      },
+      asetaAikarajat: function(rajat) {
+        _.assign(aikarajat, _.pick(rajat, 'onnistuminen', 'virhe'));
       }
     };
   }]);
