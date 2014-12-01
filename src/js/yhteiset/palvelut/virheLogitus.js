@@ -18,8 +18,14 @@
 angular.module('yhteiset.palvelut.virheLogitus', ['ngCookies'])
 
   .factory('virheLogitusApi', ['$log', '$window', '$injector', function($log, $window, $injector){
+    var virheita = 0;
+
     return {
       lahetaPalvelimelle : function(poikkeus, aiheuttaja){
+        if (virheita >= 10) {
+          return;
+        }
+        virheita++;
 
         var cookies = $injector.get('$cookies'); //Run time injektio circular depencencyn välttämiseksi
 
