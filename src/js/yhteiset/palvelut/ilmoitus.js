@@ -18,7 +18,8 @@ angular.module('yhteiset.palvelut.ilmoitus', ['toaster'])
   .factory('ilmoitus', ['toaster', function(toaster){
     var aikarajat = {
       onnistuminen: 5000,
-      virhe: 0
+      virhe: 0,
+      varoitus: 0
     };
 
     return {
@@ -28,8 +29,11 @@ angular.module('yhteiset.palvelut.ilmoitus', ['toaster'])
       virhe: function(viesti){
         toaster.pop('error', null, viesti, aikarajat.virhe);
       },
+      varoitus: function(viesti) {
+        toaster.pop('warning', null, viesti, aikarajat.varoitus);
+      },
       asetaAikarajat: function(rajat) {
-        _.assign(aikarajat, _.pick(rajat, 'onnistuminen', 'virhe'));
+        _.assign(aikarajat, _.pick(rajat, 'onnistuminen', 'virhe', 'varoitus'));
       }
     };
   }]);
