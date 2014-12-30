@@ -28,9 +28,11 @@ angular.module('yhteiset.palvelut.lokalisointi', [] )
       return obj[prop + '_' + toinenKieli];
     };
   }])
-  .filter('orderByLokalisoitu', ['$filter','kieli', function($filter, kieli) {
+  .filter('orderByLokalisoitu', ['$filter', function($filter) {
     return function(entityt, kentta, reverse){
-      return $filter('orderBy')(entityt, kentta + '_' + kieli, reverse);
+      return $filter('orderBy')(entityt, function(entity) {
+        return $filter('lokalisoiKentta')(entity, kentta);
+      }, reverse)
     };
   }]);
 
