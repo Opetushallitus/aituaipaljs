@@ -44,6 +44,8 @@ angular.module('yhteiset.palvelut.i18n', ['ngResource'])
     i18n.hae = function(avain) { return avain; };
     i18n.$promise.then(function(){
       i18n.hae = i18nHae;
+    }, function(reason) {
+      throw new Error("i18n-haku epäonnistui: " + JSON.stringify(reason));
     });
     return i18n;
   }])
