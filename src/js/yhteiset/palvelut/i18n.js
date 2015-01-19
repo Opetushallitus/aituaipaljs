@@ -41,6 +41,7 @@ angular.module('yhteiset.palvelut.i18n', ['ngResource'])
   .factory('i18n', ['$resource', 'kieli', 'i18nHae', function($resource, kieli, i18nHae) {
     var i18nResource = $resource('api/i18n/:kieli');
     var i18n = i18nResource.get({kieli : kieli});
+    i18n.hae = function(avain) { return avain; };
     i18n.$promise.then(function(){
       i18n.hae = i18nHae;
     });
