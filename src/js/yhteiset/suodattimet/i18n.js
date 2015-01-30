@@ -16,7 +16,7 @@
 
 angular.module('yhteiset.suodattimet.i18n', ['yhteiset.palvelut.i18n'])
   .filter('i18n', ['i18n',function(i18n){
-    return function(input){
+    var filter = function(input){
       if (typeof input === 'undefined' || input === ''){
         return '';
       }
@@ -26,4 +26,6 @@ angular.module('yhteiset.suodattimet.i18n', ['yhteiset.palvelut.i18n'])
         return '';
       }
     };
+    filter.$stateful = true;
+    return filter;
   }]);
