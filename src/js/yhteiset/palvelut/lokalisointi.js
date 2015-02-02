@@ -25,7 +25,11 @@ angular.module('yhteiset.palvelut.lokalisointi', [] )
         return haluttu;
       }
       var toinenKieli = (kieli === 'fi') ? 'sv' : 'fi';
-      return obj[prop + '_' + toinenKieli];
+      var haluttuToinen = obj[prop + '_' + toinenKieli];
+      if (haluttuToinen) {
+        return haluttuToinen;
+      }
+      return obj[prop];
     };
   }])
   .filter('orderByLokalisoitu', ['$filter', function($filter) {
