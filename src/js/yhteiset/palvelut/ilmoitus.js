@@ -23,14 +23,14 @@ angular.module('yhteiset.palvelut.ilmoitus', ['toaster'])
     };
 
     return {
-      onnistuminen: function(viesti){
-        toaster.pop('success', null, viesti, aikarajat.onnistuminen);
+      onnistuminen: function(viesti, otsikko){
+        toaster.pop('success', otsikko, viesti, aikarajat.onnistuminen);
       },
-      virhe: function(viesti){
-        toaster.pop('error', null, viesti, aikarajat.virhe);
+      virhe: function(viesti, otsikko){
+        toaster.pop('error', otsikko, viesti, aikarajat.virhe);
       },
-      varoitus: function(viesti) {
-        toaster.pop('warning', null, viesti, aikarajat.varoitus);
+      varoitus: function(viesti, otsikko) {
+        toaster.pop('warning', otsikko, viesti, aikarajat.varoitus);
       },
       asetaAikarajat: function(rajat) {
         _.assign(aikarajat, _.pick(rajat, 'onnistuminen', 'virhe', 'varoitus'));
