@@ -55,10 +55,12 @@ angular.module('yhteiset.palvelut.i18n', ['ngResource'])
 
     var kalenteri = {
       'paivat': {
+        'en': 'Sun,Mon,Tue,Wed,Thu,Fri,Sat',
         'fi': 'su,ma,ti,ke,to,pe,la',
         'sv': 'Sön,Mån,Tis,Ons,Tor,Fre,Lör'
       },
       'kuukaudet': {
+        'en': 'January,February,March,April,May,June,July,August,September,October,November,December',
         'fi': 'Tammi,Helmi,Maalis,Huhti,Touko,Kesä,Heinä,Elo,Syys,Loka,Marras,Joulu',
         'sv': 'Januari,Februari,Mars,April,Maj,Juni,Juli,Augusti,September,Oktober,November,December'
       }
