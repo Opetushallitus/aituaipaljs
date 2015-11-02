@@ -16,20 +16,23 @@
 
 angular.module('yhteiset.palvelut.lokalisointi', [] )
   .filter('lokalisoiKentta', ['kieli', function(kieli){
+    var prioriteettiJarjestys = [kieli, 'fi', 'sv', 'en'];
+
     return function(obj, prop) {
       if (!obj) {
         return '';
       }
-      var haluttu = obj[prop + '_' + kieli];
-      if (haluttu) {
-        return haluttu;
-      }
-      var toinenKieli = (kieli === 'fi') ? 'sv' : 'fi';
-      var haluttuToinen = obj[prop + '_' + toinenKieli];
-      if (haluttuToinen) {
-        return haluttuToinen;
-      }
-      return obj[prop];
+
+      var tulos = obj[prop];
+
+      _.forEach(prioriteettiJarjestys, function(k) {
+        var arvo = obj[prop + '_' + k];
+        if (arvo) {
+          tulos = arvo;
+          return false;
+        }
+      });
+      return tulos;
     };
   }])
   .filter('orderByLokalisoitu', ['$filter', function($filter) {
