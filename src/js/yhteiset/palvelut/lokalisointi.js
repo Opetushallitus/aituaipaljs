@@ -37,9 +37,13 @@ angular.module('yhteiset.palvelut.lokalisointi', [] )
   }])
   .filter('orderByLokalisoitu', ['$filter', function($filter) {
     return function(entityt, kentta, reverse){
+      var kenttaOsat = kentta.split('.');
+      var polku = _.initial(kenttaOsat);
+      var viimeinenKentta = _.last(kenttaOsat);
       return $filter('orderBy')(entityt, function(entity) {
-        return $filter('lokalisoiKentta')(entity, kentta);
-      }, reverse)
+        entity = _.reduce(polku, function(e, k) { return e[k]; }, entity);
+        return $filter('lokalisoiKentta')(entity, viimeinenKentta);
+      }, reverse);
     };
   }]);
 
