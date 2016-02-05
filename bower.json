@@ -11,10 +11,10 @@
     "lodash": "3.10.1"
   },
   "devDependencies": {
-    "angular": "1.2.12",
-    "angular-animate": "1.2.12",
-    "angular-mocks": "1.2.12",
-    "angular-resource": "1.2.12"
+    "angular": "1.4.9",
+    "angular-animate": "1.4.9",
+    "angular-mocks": "1.4.9",
+    "angular-resource": "1.4.9"
   },
   "ignore": [
     "bower_components"
