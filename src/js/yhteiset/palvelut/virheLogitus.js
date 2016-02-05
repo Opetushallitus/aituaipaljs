@@ -39,7 +39,7 @@ angular.module('yhteiset.palvelut.virheLogitus', ['ngCookies'])
             type: 'POST',
             url: ophBaseUrl + '/api/jslog/virhe',
             contentType: 'application/json',
-            headers : {'x-xsrf-token' : cookies['XSRF-TOKEN']},
+            headers : {'x-xsrf-token' : cookies.get('XSRF-TOKEN')},
             data: angular.toJson({
               virheenUrl: $window.location.href,
               userAgent : navigator.userAgent,
