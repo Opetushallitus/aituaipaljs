@@ -45,7 +45,7 @@ angular.module('yhteiset.palvelut.i18n', ['ngResource'])
     i18n.$promise.then(function(){
       i18n.hae = i18nHae;
     }, function(reason) {
-      throw new Error("i18n-haku epäonnistui: " + JSON.stringify(reason));
+      throw new Error('i18n-haku epäonnistui: ' + JSON.stringify(reason));
     });
     return i18n;
   }])
@@ -63,11 +63,17 @@ angular.module('yhteiset.palvelut.i18n', ['ngResource'])
         'en': 'January,February,March,April,May,June,July,August,September,October,November,December',
         'fi': 'Tammi,Helmi,Maalis,Huhti,Touko,Kesä,Heinä,Elo,Syys,Loka,Marras,Joulu',
         'sv': 'Januari,Februari,Mars,April,Maj,Juni,Juli,Augusti,September,Oktober,November,December'
+      },
+      'ajanlaskut': {
+        'en': 'BC,AD',
+        'fi': 'eKr.,jKr.',
+        'sv': 'f.Kr.,e.Kr.'
       }
     };
 
     var paivat = kalenteri.paivat[kieli].split(',');
     var kuukaudet = kalenteri.kuukaudet[kieli].split(',');
+    var ajanlaskut = kalenteri.ajanlaskut[kieli].split(',');
 
     return {
       'DATETIME_FORMATS': {
@@ -79,6 +85,10 @@ angular.module('yhteiset.palvelut.i18n', ['ngResource'])
         'MONTH': kuukaudet,
         'SHORTDAY': paivat,
         'SHORTMONTH': kuukaudet,
+        'ERANAMES': ajanlaskut,
+        'ERAS': ajanlaskut,
+        'FIRSTDAYOFWEEK': 0,
+        'WEEKENDRANGE': [5,6],
         'fullDate': 'cccc, d. MMMM y',
         'longDate': 'd. MMMM y',
         'medium': 'd.M.yyyy H.mm.ss',
